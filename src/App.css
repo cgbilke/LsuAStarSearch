@@ -1,0 +1,16 @@
+.App{
+  display: flex;
+  flex-direction: column;
+}
+
+.header{
+  line-height: 10vh;
+  background-color: beige;
+}
+
+
+
+.footer{
+  line-height: 10vh;
+  background-color: beige;
+}
