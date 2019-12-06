@@ -87,7 +87,7 @@ function aStarSearch(current, goal) {
             priorityQueue.push(child);
 
             // The distance from start to a child
-            const tentativeGScore = distance(node.x, node.y, goal.x, goal.y);
+            const tentativeGScore = distance(child.getLatitude(), child.getLongitude(), goal.getLatitude(), goal.getLongitude());
             const childGScore = gScore.has(child) ? gScore.get(child) : Infinity;
 
             // This is not a better path
