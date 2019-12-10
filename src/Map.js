@@ -31,9 +31,15 @@ export class MapObj extends Component {
 
 
   render() {
+    const style = {
+      width: '80vw',
+      height: '60vh',
+      margin: '5vh 10vw'
+    }
     return (
       <Map
         google={this.props.google}
+        style={style}
         zoom={15}
         initialCenter={{lat: 30.4133, lng: -91.1800}}
         >
