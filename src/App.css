@@ -4,13 +4,16 @@
 }
 
 .header{
-  line-height: 10vh;
-  background-color: beige;
+  height: 20vh;
+  display: flex;
+  background-color: #F4E064;
 }
 
-
+.logo{
+  height: 90%;
+}
 
 .footer{
-  line-height: 10vh;
-  background-color: beige;
+  height: 10vh;
+  background-color: #F4E064;
 }

@@ -1,10 +1,8 @@
 .body{
-    background-color: cadetblue;
-    height: 80vh;
+    background-color: #9470ce;
+    height: 70vh;
     display: flex;
     flex-direction: row;
-    /* align-items: center; */
-    /* justify-content: center; */
   }
 
 input {
@@ -13,6 +11,7 @@ input {
     padding: 10px;
     font-size: 16px;
     margin-right: 2em;
+    margin-top: 5px;
     border-radius: 8px;
 }
 input[type=text] {
@@ -20,14 +19,19 @@ input[type=text] {
 }
 
 .button{
-    background-color: #007bff;
+    background-color: #EFCF20;
     border: none;
-    color: white;
+    color: black;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     font-size: 16px;
-    margin: 4px 2px;
     cursor: pointer;
     border-radius: 8px;
+}
+
+.body-container{
+    margin: 20vh 30vh;
+    display: flex;
+    
 }

@@ -1,15 +1,45 @@
 import React, {Component} from 'react';
 import Autocomplete from "./Autocomplete";
+import Map from "./Map";
 import './body.css';
 
 class Body extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            start: null,
+            stop: null,
+            showMap: false
+        }
         this.handleMap = this.handleMap.bind(this);
+        this.updateStart = this.updateStart.bind(this);
+        this.updateStop = this.updateStop.bind(this);
     }
 
+    componentDidMount(){
+        const script = document.createElement("script");
+
+        script.src = "https://imgur.com/gallery/a848Kik";
+        script.async = true;
+        document.body.appendChild(script);
+    }
     handleMap(){
-        alert("Go home lol");
+        var {start, stop} = this.state;
+        console.log(start,stop);
+        this.setState({
+            showMap: true
+        })
+    }
+
+    updateStart(val){
+        this.setState({
+            start: val
+        });
+    }
+    updateStop(val){
+        this.setState({
+            stop: val
+        });
     }
 
     render(){
@@ -44,13 +74,17 @@ class Body extends Component{
         "Nicholson Hall",
         "Department of Geography and Anthropology",
         "School of Human Ecology"];
-
+        const {showMap} = this.state;
+        const search = (<div className="body">
+        <div className="body-container">
+            <div className="start-div"><Autocomplete valChange={this.updateStart} ptext={"Start Location"} suggestions={suggestions} /></div>
+            <div className="stop-div"><Autocomplete valChange={this.updateStop} ptext={"Stop Location"} suggestions={suggestions} /></div>
+            <div><button className="button" onClick={this.handleMap}>Map</button></div>
+        </div>
+    </div>)
+        const body = showMap ? <Map/> : search;
         return(
-            <div className="body">
-                <div className="start-div"><p>Enter Start:</p><Autocomplete suggestions={suggestions} /></div>
-                <div className="stop-div"><p>Enter Stop:</p><Autocomplete suggestions={suggestions} /></div>
-                <div><button className="button" onClick={this.handleMap}>Map</button></div>
-            </div>
+            <div>{body}</div>
         );
     }
 }

@@ -13,7 +13,6 @@ class Autocomplete extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       // The active selection's index
       activeSuggestion: 0,
@@ -30,7 +29,7 @@ class Autocomplete extends Component {
   onChange = e => {
     const { suggestions } = this.props;
     const userInput = e.currentTarget.value;
-
+    
     // Filter our suggestions that don't contain the user's input
     const filteredSuggestions = suggestions.filter(
       suggestion =>
@@ -49,6 +48,8 @@ class Autocomplete extends Component {
 
   // Event fired when the user clicks on a suggestion
   onClick = e => {
+    const { valChange } = this.props;
+    valChange(e.currentTarget.innerText);
     // Update the user input and reset the rest of the state
     this.setState({
       activeSuggestion: 0,
@@ -101,13 +102,13 @@ class Autocomplete extends Component {
         userInput
       }
     } = this;
-
+    const {ptext} = this.props;
     let suggestionsListComponent;
 
     if (showSuggestions && userInput) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
-          <ul class="suggestions">
+          <ul className="suggestions">
             {filteredSuggestions.map((suggestion, index) => {
               let className;
 
@@ -130,7 +131,7 @@ class Autocomplete extends Component {
         );
       } else {
         suggestionsListComponent = (
-          <div class="no-suggestions">
+          <div className="no-suggestions">
             <em>No suggestions</em>
           </div>
         );
@@ -141,6 +142,7 @@ class Autocomplete extends Component {
       <Fragment>
         <input
           type="text"
+          placeholder={ptext}
           onChange={onChange}
           onKeyDown={onKeyDown}
           value={userInput}
