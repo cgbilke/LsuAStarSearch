@@ -1,10 +1,11 @@
-import React from 'react';
+
 
 /* This class defines our most basic node that includes it's latitude, longitude,
 the id # of the node, the string name, and a list of neighbors that it has an edge
 to */
 class Node {
     constructor(latitude, longitude, id, name, neighbors) {
+      console.log("New Node: ("+latitude+","+longitude+","+id+","+name+","+neighbors);
         this.latitude = latitude;
         this.longitude = longitude;
         this.id = id;
@@ -26,46 +27,43 @@ class Node {
 
 //Generate Nodes from CSV
 var nodes = [];
-var nodesStr, edgesStr;
-const readLine = require('readline');
-const fs = require('fs');
-const readInterface = readline.createInterface({
-  input: fs.createReadStream('nodes.csv'),
-  output: process.stdout,
-  console: false
-});
-readInterface.on('line', function(line) {
-  console.log(line);
-});
+function generateNodes() {
+  var nodesStr, edgesStr;
+  var attr = [];
+  var readline = require('readline');
+  const fs = require('fs');
+  const readNodes = readline.createInterface({
+    input: fs.createReadStream('../public/nodes.csv'),
+    // output: process.stdout,
+    console: false
+  });
+  readNodes.on('line', function(line) {
+    attr.push(line);
+    // console.log(line);
+  });
+  var readEdges = readline.createInterface({
+    input: fs.createReadStream('../public/edges.csv'),
+    // output: process.stdout,
+    console: false
+  });
+  var counter = 0;
+  readEdges.on('line', function(line) {
+    // console.log(attr[counter]);
+    var nodeAttr = attr[counter].split(',');
 
-// var http = new XMLHttpRequest({mozSystem: true});
-// http.onreadystatechange = function() {
-//   if(this.readyState == 4 && this.status == 200) {
-//     nodesStr = this.result;
-//     http2.open("GET", "file:///edges.csv", true);
-//     http2.send();
-//   }
-// };
-// var http2 = new XMLHttpRequest({mozSystem: true});
-// http2.onreadystatechange = function() {
-//   if(this.readyState == 4 && this.status == 200) {
-//     var lines = nodesStr.split("\n");
-//     var edges = this.result.split("\n");
-//     for (var line = 0; line < lines.length; line++){
-//       var attr = lines[line].split(",");
-//       var tmp = edges[line].split(",");
-//       var neighbors = [];
-//       for(let i = 1; i < tmp.length; i++) {
-//         neighbors.push(parseInt(tmp[i]));
-//       }
-//       nodes.push(new Node(attr[0], attr[1], parseInt(attr[2]), attr[3], neighbors));
-//     }
-//     console.log(nodes);
-//   }
-// }
-// http.open("GET", "file:///nodes.csv", true);
-// http.send();
-
+    var neighbors = [];
+    line = line.replace('"', '');
+    line = line.toString().replace('"', '')
+    // console.log(line);
+    var tmp = line.split(",");
+    for(let i = 0; i < tmp.length; i++) {
+      neighbors.push(parseInt(tmp[i]));
+    }
+  nodes.push(new Node(parseInt(nodeAttr[0]), parseInt(nodeAttr[1]), parseInt(nodeAttr[2]), nodeAttr[3], neighbors));
+  counter++;
+  });
+}
+generateNodes();
 
 //helper function to convert degrees to radians
 function toRadians(degrees) {
@@ -99,6 +97,17 @@ function getSuccessors(current) {
 //do the heuristic estimation for a node to the goal
 function estimate(current, goal) {
     //use path distance of csv neighbors to get the heuristic?
+}
+
+function searchHelper(current, goal) {
+  var node1, node2;
+  for(var i = 0; i < nodes.length; i++) {
+    if(nodes[i].getName() == current) node1 = nodes[i];
+    else if(nodes[i].getName() == goal) node2 = nodes[i];
+    if(node1 != undefined && node2 != undefined) break;
+  }
+  if(node1 != undefined && node2 != undefined) return aStarSearch(node1, node2);
+  else console.log("Error, nodes not found");
 }
 
 function aStarSearch(current, goal) {
@@ -155,3 +164,4 @@ function aStarSearch(current, goal) {
     }
     return path.reverse();
 }
+// console.log(searchHelper("LSU Art Building", "Animal and Food Science Lab"));
