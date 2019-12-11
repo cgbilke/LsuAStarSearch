@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Autocomplete from "./Autocomplete";
 import Map from "./Map";
 import './body.css';
+import hello from "./test";
 
 class Body extends Component{
     constructor(props){
@@ -16,14 +17,8 @@ class Body extends Component{
         this.updateStop = this.updateStop.bind(this);
     }
 
-    componentDidMount(){
-        const script = document.createElement("script");
-
-        script.src = "https://imgur.com/gallery/a848Kik";
-        script.async = true;
-        document.body.appendChild(script);
-    }
     handleMap(){
+        hello("courtland");
         var {start, stop} = this.state;
         console.log(start,stop);
         this.setState({
@@ -76,13 +71,13 @@ class Body extends Component{
         "School of Human Ecology"];
         const {showMap} = this.state;
         const search = (<div className="body">
-        <div className="body-container">
-            <div className="start-div"><Autocomplete valChange={this.updateStart} ptext={"Start Location"} suggestions={suggestions} /></div>
-            <div className="stop-div"><Autocomplete valChange={this.updateStop} ptext={"Stop Location"} suggestions={suggestions} /></div>
-            <div><button className="button" onClick={this.handleMap}>Map</button></div>
-        </div>
-    </div>)
-        const body = showMap ? <Map/> : search;
+                            <div className="body-container">
+                                <div className="start-div"><Autocomplete valChange={this.updateStart} ptext={"Start Location"} suggestions={suggestions} /></div>
+                                <div className="stop-div"><Autocomplete valChange={this.updateStop} ptext={"Stop Location"} suggestions={suggestions} /></div>
+                                <div><button className="button" onClick={this.handleMap}>Map</button></div>
+                            </div>
+                        </div>)
+        const body = showMap ? <div id="map"><Map/></div> : search;
         return(
             <div>{body}</div>
         );
