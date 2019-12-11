@@ -6,7 +6,7 @@
 .header{
   height: 20vh;
   display: flex;
-  background-color: #F4E064;
+  background-color: #FDD023;
 }
 
 .logo{
@@ -15,5 +15,8 @@
 
 .footer{
   height: 10vh;
-  background-color: #F4E064;
+  background-color: #FDD023;
+  text-align: center;
+  height: 100%;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
