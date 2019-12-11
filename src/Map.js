@@ -1,18 +1,13 @@
 import React, {Component} from 'react';
-import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
-// function genMap(props) {
-//   console.log(`m[${props.key}] = ${props.value}`);
-// }
+import {Map, Marker, GoogleApiWrapper, Polyline} from 'google-maps-react';
+
 
 
 export class MapObj extends Component {
   constructor(props) {
     super(props);
-    // this.genMap = this.genMap.bind(this);
     this.path = {
-      coords: [{lat: 30.4133, lng: -91.1800},
-      {lat: 30.4120, lng: -91.1700},
-      {lat: 30.4120, lng: -91.1750}]
+      coords: props.path
     }
   }
 
@@ -25,17 +20,17 @@ export class MapObj extends Component {
       onClick={() => console.log("You clicked me!")} />
     })
   }
-  // showMap() {
-  //
-  // }
+  
 
 
   render() {
     const style = {
-      width: '80vw',
+      width: '60vw',
       height: '60vh',
-      margin: '5vh 10vw'
-    }
+      margin: '5vh 10vw',
+      overflow: 'hidden'
+    };
+    const { coords } = this.path;
     return (
       <Map
         google={this.props.google}
@@ -44,6 +39,15 @@ export class MapObj extends Component {
         initialCenter={{lat: 30.4133, lng: -91.1800}}
         >
         {this.displayMarkers()}
+        <Polyline
+                path={coords}
+                geodesic={true}
+                options={{
+                    strokeColor: "#ff2527",
+                    strokeOpacity: 0.75,
+                    strokeWeight: 3
+                }}
+            />
         </Map>
     )
   }

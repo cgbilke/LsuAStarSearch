@@ -3,6 +3,7 @@ import Autocomplete from "./Autocomplete";
 import Map from "./Map";
 import './body.css';
 import hello from "./test";
+import distance from "./distance";
 
 class Body extends Component{
     constructor(props){
@@ -18,11 +19,26 @@ class Body extends Component{
     }
 
     handleMap(){
-        hello("courtland");
-        var {start, stop} = this.state;
+        // hello("courtland");
+        const {start, stop} = this.state;
         console.log(start,stop);
+        //pass the start, stop and parse the output.
+        
+        //Assume this is the parsed output  
+        var coords = [{lat: 30.4133, lng: -91.1800},
+            {lat: 30.4120, lng: -91.1750},
+            {lat: 30.4120, lng: -91.1700}];
+        var sum = 0;
+        for(var i=0;i < (coords.length)-1; i++){
+            var item = coords[i]
+            var item2 = coords[i+1]
+            sum = sum + distance(item.lat,item.lng,item2.lat,item2.lng);
+        } 
+        console.log("Path distance: ",sum.toFixed(4));
         this.setState({
-            showMap: true
+            showMap: true,
+            coords,
+            sum: sum.toFixed(4)
         })
     }
 
@@ -69,7 +85,7 @@ class Body extends Component{
         "Nicholson Hall",
         "Department of Geography and Anthropology",
         "School of Human Ecology"];
-        const {showMap} = this.state;
+        const {showMap,coords,sum} = this.state;
         const search = (<div className="body">
                             <div className="body-container">
                                 <div className="start-div"><Autocomplete valChange={this.updateStart} ptext={"Start Location"} suggestions={suggestions} /></div>
@@ -77,7 +93,9 @@ class Body extends Component{
                                 <div><button className="button" onClick={this.handleMap}>Map</button></div>
                             </div>
                         </div>)
-        const body = showMap ? <div id="map"><Map/></div> : search;
+        const body = showMap ? 
+    <div className="map"><div className="metadata">Distance = {sum} Miles</div><Map path={coords}/></div> 
+        : search;
         return(
             <div>{body}</div>
         );

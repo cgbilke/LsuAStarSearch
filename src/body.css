@@ -35,3 +35,19 @@ input[type=text] {
     display: flex;
     
 }
+
+.map{
+    display: flex;
+    flex-direction: row;
+}
+.map>div>div{
+    width: 40% !important;
+    height:40% !important;
+}
+
+.metadata{
+    font-size: large;
+    padding-top: 100%;
+    margin-left: 10%;
+    color: white;
+}

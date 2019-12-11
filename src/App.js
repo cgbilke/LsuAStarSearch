@@ -18,9 +18,8 @@ class App extends React.Component{
         <div className="header"> <img className="logo" alt="logo"src={Logo} /></div>
         <div className="body"><Body/></div>
         <div className="footer">
-          <h1>DEVELOPED BY</h1>
-            <p>• Jake Ardoin • Christian Bilke • Courtland Crouchet • Megan Do • Cody Dronet • Ahmonya Edwards • Afolabi Ige • Seth Pottle 
-</p>
+          <h3>DEVELOPED BY</h3>
+            <p> Christian Bilke • Courtland Crouchet • Megan Do • Cody Dronet • Ahmonya Edwards • Afolabi Ige • Seth Pottle • Jake Ardoin </p>
             </div>
       </div>
     );
