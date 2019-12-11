@@ -1,5 +1,5 @@
 .body{
-    background-color: #9470ce;
+    background-color: #461d7c;
     height: 70vh;
     display: flex;
     flex-direction: row;
@@ -19,7 +19,7 @@ input[type=text] {
 }
 
 .button{
-    background-color: #EFCF20;
+    background-color:#FDD023;
     border: none;
     color: black;
     padding: 15px 32px;
