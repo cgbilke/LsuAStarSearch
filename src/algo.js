@@ -5,7 +5,7 @@ the id # of the node, the string name, and a list of neighbors that it has an ed
 to */
 class Node {
     constructor(latitude, longitude, id, name, neighbors) {
-      console.log("New Node: ("+latitude+","+longitude+","+id+","+name+","+neighbors);
+      console.log("New Node: " + latitude + ","+longitude+","+neighbors);
         this.latitude = latitude;
         this.longitude = longitude;
         this.id = id;
@@ -26,8 +26,8 @@ class Node {
 }
 
 //Generate Nodes from CSV
-var nodes = [];
 function generateNodes() {
+  let nodes = [];
   var nodesStr, edgesStr;
   var attr = [];
   var readline = require('readline');
@@ -60,11 +60,15 @@ function generateNodes() {
       neighbors.push(parseInt(tmp[i]));
     }
   nodes.push(new Node(parseInt(nodeAttr[0]), parseInt(nodeAttr[1]), parseInt(nodeAttr[2]), nodeAttr[3], neighbors));
+  // console.log("nodes = " + nodes)
   counter++;
   });
+  console.log("readedges = " + readEdges);
+  return nodes;
 }
-generateNodes();
-
+console.log("test,Nodes= ",generateNodes())
+// var nodes = generateNodes();
+// console.log("test, nodes = ", nodes);
 //helper function to convert degrees to radians
 function toRadians(degrees) {
     return degrees * Math.PI / 180;
@@ -100,14 +104,22 @@ function estimate(current, goal) {
 }
 
 function searchHelper(current, goal) {
+  console.log("nodes = " + nodes);
   var node1, node2;
+  console.log("current = " + current);
+  console.log("goal = " + goal);
   for(var i = 0; i < nodes.length; i++) {
+    console.log("nodes["+i+"] = " + nodes[i].getName());
     if(nodes[i].getName() == current) node1 = nodes[i];
     else if(nodes[i].getName() == goal) node2 = nodes[i];
     if(node1 != undefined && node2 != undefined) break;
   }
   if(node1 != undefined && node2 != undefined) return aStarSearch(node1, node2);
-  else console.log("Error, nodes not found");
+  else {
+    console.log("Error, nodes not found");
+    // console.log("node1: " + node1);
+    // console.log("node2: " + node2);
+  }
 }
 
 function aStarSearch(current, goal) {
