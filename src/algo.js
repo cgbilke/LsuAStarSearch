@@ -24,6 +24,49 @@ class Node {
     setNeighbors(neighbors) { this.neighbors = neighbors; }
 }
 
+//Generate Nodes from CSV
+var nodes = [];
+var nodesStr, edgesStr;
+const readLine = require('readline');
+const fs = require('fs');
+const readInterface = readline.createInterface({
+  input: fs.createReadStream('nodes.csv'),
+  output: process.stdout,
+  console: false
+});
+readInterface.on('line', function(line) {
+  console.log(line);
+});
+
+// var http = new XMLHttpRequest({mozSystem: true});
+// http.onreadystatechange = function() {
+//   if(this.readyState == 4 && this.status == 200) {
+//     nodesStr = this.result;
+//     http2.open("GET", "file:///edges.csv", true);
+//     http2.send();
+//   }
+// };
+// var http2 = new XMLHttpRequest({mozSystem: true});
+// http2.onreadystatechange = function() {
+//   if(this.readyState == 4 && this.status == 200) {
+//     var lines = nodesStr.split("\n");
+//     var edges = this.result.split("\n");
+//     for (var line = 0; line < lines.length; line++){
+//       var attr = lines[line].split(",");
+//       var tmp = edges[line].split(",");
+//       var neighbors = [];
+//       for(let i = 1; i < tmp.length; i++) {
+//         neighbors.push(parseInt(tmp[i]));
+//       }
+//       nodes.push(new Node(attr[0], attr[1], parseInt(attr[2]), attr[3], neighbors));
+//     }
+//     console.log(nodes);
+//   }
+// }
+// http.open("GET", "file:///nodes.csv", true);
+// http.send();
+
+
 //helper function to convert degrees to radians
 function toRadians(degrees) {
     return degrees * Math.PI / 180;
