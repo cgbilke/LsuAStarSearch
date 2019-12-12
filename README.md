@@ -1,2 +1,3 @@
 # LsuAStarSearch
- artifical intelligence group project
+ Artifical intelligence group project
+ Viewable at https://lsu-mapper.firebaseapp.com/
