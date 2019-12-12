@@ -114,7 +114,16 @@ function estimate(current, goal) {
     return distance(current.getLatitude(), current.getLongitude(), goal.getLatitude(), goal.getLongitude());
 }
 
-function searchHelper(current, goal,nodes) {
+function searchHelper(current, goal, nodeList) {
+  console.log("Hello: ",nodeList);
+  // var nodes = [];
+  for(var i = 0; i < nodeList.length; i++) {
+    var neighbors = [];
+    for(var j = 0; j < nodeList[i].edges.length; j++) {
+      neighbors.push(parseInt(nodeList[4][j]));
+    }
+    nodes.push(new Node(parseFloat(nodeList[i].lat), parseFloat(nodeList[i].lng), parseInt(nodeList[i].id), nodeList[i].name, neighbors));
+  }
   console.log("Start, stop", nodes);
   var node1, node2;
   console.log("current = " + current);
@@ -125,7 +134,7 @@ function searchHelper(current, goal,nodes) {
     else if(nodes[i].getName() == goal) node2 = nodes[i];
     if(node1 != undefined && node2 != undefined) break;
   }
-  if(node1 != undefined && node2 != undefined) return null;
+  if(node1 != undefined && node2 != undefined) return aStarSearch(node1, node2, nodes);
   else {
     console.log("Error, nodes not found");
     // console.log("node1: " + node1);
@@ -133,7 +142,7 @@ function searchHelper(current, goal,nodes) {
   }
 }
 
-function aStarSearch(current, goal) {
+function aStarSearch(current, goal, nodes) {
     const priorityQueue = [current];
     const closed = new Set();
     const parents = new Map();
