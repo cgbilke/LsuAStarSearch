@@ -17,7 +17,7 @@ export class MapObj extends Component {
         lat: path.lat,
         lng: path.lng
       }}
-      onClick={() => console.log("You clicked me!")} />
+       />
     })
   }
   

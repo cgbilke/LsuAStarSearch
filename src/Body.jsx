@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Autocomplete from "./Autocomplete";
 import Map from "./Map";
 import './body.css';
-import hello from "./test";
 import distance from "./distance";
 import nodes from "./nodelist";
 import searchHelper from "./algo";
@@ -24,17 +23,15 @@ class Body extends Component{
     handleMap(){
         // hello("courtland");
         const {start, stop} = this.state;
-        console.log(start,stop);
         //pass the start, stop and parse the output.
         if(start == null || stop == null){
             alert('Please enter both start and stop')
             return;
         }
-        searchHelper(start,stop,nodes)
+        var temp = searchHelper(start,stop,nodes)
+        console.log("output here->>>>",temp);
         //Assume this is the parsed output  
-        var coords = [{lat: 30.4133, lng: -91.1800},
-                    {lat: 30.4120, lng: -91.1750},
-                    {lat: 30.4120, lng: -91.1700}];
+        var coords = temp;
         var sum = 0;
         for(var i=0;i < (coords.length)-1; i++){
             var item = coords[i]

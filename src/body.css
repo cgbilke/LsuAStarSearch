@@ -33,6 +33,7 @@ input[type=text] {
 .body-container{
     margin: 20vh 30vh;
     display: flex;
+    width: 100%;
 }
 
 .map{
