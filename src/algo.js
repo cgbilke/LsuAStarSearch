@@ -195,7 +195,8 @@ function aStarSearch(current, goal, nodes) {
 
     const path = [];
     while (node) {
-        path.push(node);
+        // path.push(node);
+        path.push({lat: node.latitude, lng: node.longitude});
         node = parents.get(node);
     }
     return path.reverse();
