@@ -25,59 +25,59 @@ class Node {
     setNeighbors(neighbors) { this.neighbors = neighbors; }
 }
 
-global.nodes = [];
+var nodes = [];
 //Generate Nodes from CSV
-function generateNodes() {
-  var nodesStr, edgesStr;
-  var attr = [];
-  var readline = require('readline');
-  const fs = require('fs');
-  const readNodes = readline.createInterface({
-    input: fs.createReadStream('../public/nodes.csv'),
-    // output: process.stdout,
-    console: false
-  });
-  readNodes.on('line', function(line) {
-    attr.push(line);
-    // console.log(line);
-  });
-  readNodes.on("close", function() {
-    console.log("closing readNodes");
-    // console.log("attr = " + attr);
-  });
+// function generateNodes() {
+//   var nodesStr, edgesStr;
+//   var attr = [];
+//   var readline = require('readline');
+//   const fs = require('fs');
+//   const readNodes = readline.createInterface({
+//     input: fs.createReadStream('../public/nodes.csv'),
+//     // output: process.stdout,
+//     console: false
+//   });
+//   readNodes.on('line', function(line) {
+//     attr.push(line);
+//     // console.log(line);
+//   });
+//   readNodes.on("close", function() {
+//     console.log("closing readNodes");
+//     // console.log("attr = " + attr);
+//   });
 
-  var readEdges = readline.createInterface({
-    input: fs.createReadStream('../public/edges.csv'),
-    // output: process.stdout,
-    console: false
-  });
-  var counter = 0;
-  readEdges.on('line', function(line) {
-    // console.log(attr[counter]);
-    var nodeAttr = attr[counter].split(',');
+//   var readEdges = readline.createInterface({
+//     input: fs.createReadStream('../public/edges.csv'),
+//     // output: process.stdout,
+//     console: false
+//   });
+//   var counter = 0;
+//   readEdges.on('line', function(line) {
+//     // console.log(attr[counter]);
+//     var nodeAttr = attr[counter].split(',');
 
-    var neighbors = [];
-    line = line.replace('"', '');
-    line = line.toString().replace('"', '')
-    // console.log(line);
-    var tmp = line.split(",");
-    for(let i = 0; i < tmp.length; i++) {
-      neighbors.push(parseInt(tmp[i]));
-    }
-  nodes.push(new Node(parseInt(nodeAttr[0]), parseInt(nodeAttr[1]), parseInt(nodeAttr[2]), nodeAttr[3], neighbors));
-  // console.log("nodes = " + nodes)
-  counter++;
-  });
-  readEdges.on("close", function() {
-    console.log("Closing readEdges");
-    // console.log("nodes = " + nodes);
-    console.log(searchHelper("LSU Art Building", "Animal and Food Science Lab"));
+//     var neighbors = [];
+//     line = line.replace('"', '');
+//     line = line.toString().replace('"', '')
+//     // console.log(line);
+//     var tmp = line.split(",");
+//     for(let i = 0; i < tmp.length; i++) {
+//       neighbors.push(parseInt(tmp[i]));
+//     }
+//   nodes.push(new Node(parseInt(nodeAttr[0]), parseInt(nodeAttr[1]), parseInt(nodeAttr[2]), nodeAttr[3], neighbors));
+//   // console.log("nodes = " + nodes)
+//   counter++;
+//   });
+//   readEdges.on("close", function() {
+//     console.log("Closing readEdges");
+//     // console.log("nodes = " + nodes);
+//     console.log(searchHelper("LSU Art Building", "Animal and Food Science Lab"));
 
-  });
-  // return nodes;
-}
+//   });
+//   // return nodes;
+// }
 // console.log("test,Nodes= ",generateNodes())
-generateNodes();
+// generateNodes();
 // var nodes = generateNodes();
 // console.log("test, nodes = ", nodes);
 //helper function to convert degrees to radians
@@ -101,7 +101,7 @@ function distance(x1, y1, x2, y2) {
         Math.cos(x1) * Math.cos(x2) *
         Math.sin(diffy/2) * Math.sin(diffy/2);
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return  d = R * c;
+    return  R * c;
 }
 
 //return a list of the available nodes from current node
@@ -114,8 +114,8 @@ function estimate(current, goal) {
     return distance(current.getLatitude(), current.getLongitude(), goal.getLatitude(), goal.getLongitude());
 }
 
-function searchHelper(current, goal) {
-  // console.log("nodes = " + nodes);
+function searchHelper(current, goal,nodes) {
+  console.log("Start, stop", nodes);
   var node1, node2;
   console.log("current = " + current);
   console.log("goal = " + goal);
@@ -125,7 +125,7 @@ function searchHelper(current, goal) {
     else if(nodes[i].getName() == goal) node2 = nodes[i];
     if(node1 != undefined && node2 != undefined) break;
   }
-  if(node1 != undefined && node2 != undefined) return aStarSearch(node1, node2);
+  if(node1 != undefined && node2 != undefined) return null;
   else {
     console.log("Error, nodes not found");
     // console.log("node1: " + node1);
@@ -187,4 +187,6 @@ function aStarSearch(current, goal) {
     }
     return path.reverse();
 }
+
+export default searchHelper;
 // console.log(searchHelper("LSU Art Building", "Animal and Food Science Lab"));

@@ -4,7 +4,8 @@ import Map from "./Map";
 import './body.css';
 import hello from "./test";
 import distance from "./distance";
-import nodelist from "./nodelist"
+import nodes from "./nodelist";
+import searchHelper from "./algo";
 
 class Body extends Component{
     constructor(props){
@@ -29,11 +30,11 @@ class Body extends Component{
             alert('Please enter both start and stop')
             return;
         }
+        searchHelper(start,stop,nodes)
         //Assume this is the parsed output  
-        var coords = nodelist;
-        // [{lat: 30.4133, lng: -91.1800},
-        //             {lat: 30.4120, lng: -91.1750},
-        //             {lat: 30.4120, lng: -91.1700}];
+        var coords = [{lat: 30.4133, lng: -91.1800},
+                    {lat: 30.4120, lng: -91.1750},
+                    {lat: 30.4120, lng: -91.1700}];
         var sum = 0;
         for(var i=0;i < (coords.length)-1; i++){
             var item = coords[i]
@@ -112,7 +113,7 @@ class Body extends Component{
                 <button className="button" onClick={this.backToSearch}>Search</button> 
                 <p>Distance = {sum} Miles</p>
             </div>
-            <Map path={coords} nodes={nodelist}/>
+            <Map path={coords} nodes={nodes}/>
         </div> 
         : search;
         return(
