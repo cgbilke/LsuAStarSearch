@@ -111,7 +111,7 @@ function getSuccessors(current) {
 
 //do the heuristic estimation for a node to the goal
 function estimate(current, goal) {
-    //use path distance of csv neighbors to get the heuristic?
+    return distance(current.getLatitude(), current.getLongitude(), goal.getLatitude(), goal.getLongitude());
 }
 
 function searchHelper(current, goal) {
