@@ -5,7 +5,7 @@ the id # of the node, the string name, and a list of neighbors that it has an ed
 to */
 class Node {
     constructor(latitude, longitude, id, name, neighbors) {
-      console.log("New Node: " + latitude + ","+longitude+","+neighbors);
+      // console.log("New Node: " + latitude + ","+longitude+","+neighbors);
         this.latitude = latitude;
         this.longitude = longitude;
         this.id = id;
@@ -25,9 +25,9 @@ class Node {
     setNeighbors(neighbors) { this.neighbors = neighbors; }
 }
 
+global.nodes = [];
 //Generate Nodes from CSV
 function generateNodes() {
-  let nodes = [];
   var nodesStr, edgesStr;
   var attr = [];
   var readline = require('readline');
@@ -41,6 +41,11 @@ function generateNodes() {
     attr.push(line);
     // console.log(line);
   });
+  readNodes.on("close", function() {
+    console.log("closing readNodes");
+    // console.log("attr = " + attr);
+  });
+
   var readEdges = readline.createInterface({
     input: fs.createReadStream('../public/edges.csv'),
     // output: process.stdout,
@@ -63,10 +68,16 @@ function generateNodes() {
   // console.log("nodes = " + nodes)
   counter++;
   });
-  console.log("readedges = " + readEdges);
-  return nodes;
+  readEdges.on("close", function() {
+    console.log("Closing readEdges");
+    // console.log("nodes = " + nodes);
+    console.log(searchHelper("LSU Art Building", "Animal and Food Science Lab"));
+
+  });
+  // return nodes;
 }
-console.log("test,Nodes= ",generateNodes())
+// console.log("test,Nodes= ",generateNodes())
+generateNodes();
 // var nodes = generateNodes();
 // console.log("test, nodes = ", nodes);
 //helper function to convert degrees to radians
@@ -104,12 +115,12 @@ function estimate(current, goal) {
 }
 
 function searchHelper(current, goal) {
-  console.log("nodes = " + nodes);
+  // console.log("nodes = " + nodes);
   var node1, node2;
   console.log("current = " + current);
   console.log("goal = " + goal);
   for(var i = 0; i < nodes.length; i++) {
-    console.log("nodes["+i+"] = " + nodes[i].getName());
+    // console.log("nodes["+i+"] = " + nodes[i].getName());
     if(nodes[i].getName() == current) node1 = nodes[i];
     else if(nodes[i].getName() == goal) node2 = nodes[i];
     if(node1 != undefined && node2 != undefined) break;
