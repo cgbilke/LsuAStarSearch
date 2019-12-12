@@ -16,6 +16,7 @@ class Body extends Component{
         this.handleMap = this.handleMap.bind(this);
         this.updateStart = this.updateStart.bind(this);
         this.updateStop = this.updateStop.bind(this);
+        this.backToSearch = this.backToSearch.bind(this);
     }
 
     handleMap(){
@@ -23,7 +24,10 @@ class Body extends Component{
         const {start, stop} = this.state;
         console.log(start,stop);
         //pass the start, stop and parse the output.
-        
+        if(start == null || stop == null){
+            alert('Please enter both start and stop')
+            return;
+        }
         //Assume this is the parsed output  
         var coords = [{lat: 30.4133, lng: -91.1800},
             {lat: 30.4120, lng: -91.1750},
@@ -34,12 +38,19 @@ class Body extends Component{
             var item2 = coords[i+1]
             sum = sum + distance(item.lat,item.lng,item2.lat,item2.lng);
         } 
-        console.log("Path distance: ",sum.toFixed(4));
         this.setState({
             showMap: true,
             coords,
             sum: sum.toFixed(4)
         })
+    }
+
+    backToSearch(){
+        this.setState({
+            showMap: false,
+            start: null,
+            stop:null
+        });
     }
 
     updateStart(val){
@@ -94,7 +105,13 @@ class Body extends Component{
                             </div>
                         </div>)
         const body = showMap ? 
-    <div className="map"><div className="metadata">Distance = {sum} Miles</div><Map path={coords}/></div> 
+        <div className="map">
+            <div className="metadata">
+                <button className="button" onClick={this.backToSearch}>Search</button> 
+                <p>Distance = {sum} Miles</p>
+            </div>
+            <Map path={coords}/>
+        </div> 
         : search;
         return(
             <div>{body}</div>

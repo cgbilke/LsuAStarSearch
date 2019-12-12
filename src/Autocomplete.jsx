@@ -66,6 +66,9 @@ class Autocomplete extends Component {
     // User pressed the enter key, update the input and close the
     // suggestions
     if (e.keyCode === 13) {
+      const { valChange } = this.props;
+      valChange(filteredSuggestions[activeSuggestion]);
+      
       this.setState({
         activeSuggestion: 0,
         showSuggestions: false,
