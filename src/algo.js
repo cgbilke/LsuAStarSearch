@@ -87,11 +87,6 @@ function toRadians(degrees) {
 
 //uses 'haversine' formula to calculate shortest distance on the earths surface
 function distance(x1, y1, x2, y2) {
-    this.x1 = x1;
-    this.x2 = x2;
-    this.y1 = y1;
-    this.y2 = y2;
-
     const R = 6371e3; //meters
     let lat1 = toRadians(x1);
     let lat2 = toRadians(x2);
@@ -165,25 +160,28 @@ function aStarSearch(current, goal, nodes) {
         closed.add(node)
 
         for (let child of getSuccessors(node)) {
-            if (closed.has(child)) {
+            console.log("Child = " + child);
+            var current_child = nodes[child-1];
+            console.log("child = " + current_child);
+            if (closed.has(current_child)) {
                 continue;
             }
-            priorityQueue.push(child);
+            priorityQueue.push(current_child);
 
             // The distance from start to a child
-            const tentativeGScore = distance(child.getLatitude(), child.getLongitude(), goal.getLatitude(), goal.getLongitude());
-            const childGScore = gScore.has(child) ? gScore.get(child) : Infinity;
+            const tentativeGScore = distance(current_child.getLatitude(), current_child.getLongitude(), goal.getLatitude(), goal.getLongitude());
+            const childGScore = gScore.has(current_child) ? gScore.get(current_child) : Infinity;
 
             // This is not a better path
             if (tentativeGScore >= childGScore) {
                 continue
             }
             // This path is the best until now. We should save it.
-            parents.set(child, node);
-            gScore.set(child, tentativeGScore);
+            parents.set(current_child, node);
+            gScore.set(current_child, tentativeGScore);
 
-            const childFScore = tentativeGScore + estimate(child, goal);
-            fScore.set(child, childFScore)
+            const childFScore = tentativeGScore + estimate(current_child, goal);
+            fScore.set(current_child, childFScore)
         }
 
         priorityQueue.sort((a, b) => fScore.get(a) - fScore.get(b))
