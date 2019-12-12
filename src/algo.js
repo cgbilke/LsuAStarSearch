@@ -115,7 +115,8 @@ function searchHelper(current, goal, nodeList) {
   for(var i = 0; i < nodeList.length; i++) {
     var neighbors = [];
     for(var j = 0; j < nodeList[i].edges.length; j++) {
-      neighbors.push(parseInt(nodeList[4][j]));
+      //console.log("node = " + nodeList[i]);
+      neighbors.push(parseInt(nodeList[i]["edges"][j]));
     }
     nodes.push(new Node(parseFloat(nodeList[i].lat), parseFloat(nodeList[i].lng), parseInt(nodeList[i].id), nodeList[i].name, neighbors));
   }
@@ -161,8 +162,13 @@ function aStarSearch(current, goal, nodes) {
 
         for (let child of getSuccessors(node)) {
             console.log("Child = " + child);
-            var current_child = nodes[child-1];
-            console.log("child = " + current_child);
+            // if(typeof(child) == Number) var current_child = nodes[child-1];
+            // else current_child = child;
+            var current_child;
+            for(var i = 0; i < nodes.length; i++) {
+              if(nodes[i].id == child) current_child = nodes[i];
+            }
+            console.log("current_child = " + current_child);
             if (closed.has(current_child)) {
                 continue;
             }
