@@ -133,8 +133,6 @@ function searchHelper(current, goal, nodeList) {
   if(node1 != undefined && node2 != undefined) return aStarSearch(node1, node2, nodes);
   else {
     console.log("Error, nodes not found");
-    // console.log("node1: " + node1);
-    // console.log("node2: " + node2);
   }
 }
 

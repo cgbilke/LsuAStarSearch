@@ -28,10 +28,8 @@ class Body extends Component{
             alert('Please enter both start and stop')
             return;
         }
-        var temp = searchHelper(start,stop,nodes)
-        console.log("output here->>>>",temp);
         //Assume this is the parsed output  
-        var coords = temp;
+        var coords = searchHelper(start,stop,nodes);
         var sum = 0;
         for(var i=0;i < (coords.length)-1; i++){
             var item = coords[i]
@@ -41,7 +39,8 @@ class Body extends Component{
         this.setState({
             showMap: true,
             coords,
-            sum: sum.toFixed(4)
+            sum: sum.toFixed(4),
+            len: coords.length
         })
     }
 
@@ -96,7 +95,7 @@ class Body extends Component{
         "Nicholson Hall",
         "Department of Geography and Anthropology",
         "School of Human Ecology"];
-        const {showMap,coords,sum} = this.state;
+        const {showMap,coords,sum, start, stop,len} = this.state;
         const search = (<div className="body">
                             <div className="body-container">
                                 <div className="start-div"><Autocomplete valChange={this.updateStart} ptext={"Start Location"} suggestions={suggestions} /></div>
@@ -108,7 +107,7 @@ class Body extends Component{
         <div className="map">
             <div className="metadata">
                 <button className="button" onClick={this.backToSearch}>Search</button> 
-                <p>Distance = {sum} Miles</p>
+                <p>Start = {start} </p> <p> Stop = {stop} </p> <p> Distance = {sum} Miles</p> <p>Nodes: {len}</p>
             </div>
             <Map path={coords} nodes={nodes}/>
         </div> 
